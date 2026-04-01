@@ -1,1 +1,5 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/mildman1848/plugin.video.themoviedb.helper/blob/mildman/headless-libsync/README.md
+    about: Please read the fork workflow and setup docs first.
