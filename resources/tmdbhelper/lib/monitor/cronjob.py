@@ -73,7 +73,7 @@ class CronJobMonitor(SafeThread):
     def _do_library_update(self):
         from tmdbhelper.lib.addon.plugin import executebuiltin
         from tmdbhelper.lib.addon.tmdate import get_datetime_now, get_timedelta
-        executebuiltin('RunScript(plugin.video.themoviedb.helper,library_autoupdate)')
+        executebuiltin('RunScript(plugin.video.themoviedb.helper,library_autoupdate,background=true)')
         executebuiltin(f'Skin.SetString(TMDbHelper.AutoUpdate.LastTime,{get_datetime_now().strftime("%Y-%m-%dT%H:%M:%S")})')
         self.library_update_next += get_timedelta(hours=24)  # Set next update for tomorrow
 

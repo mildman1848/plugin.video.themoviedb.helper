@@ -35,11 +35,11 @@ def add_user_list(user_list=None, user_slug=None, force=False, **kwargs):
         library.create(user_slug=user_slug or 'me', list_slug=user_list)
 
 
-def run_autoupdate(force=False, busy_dialog=False, **kwargs):
-    from xbmcgui import Dialog
-    from tmdbhelper.lib.addon.plugin import get_localized
+def run_autoupdate(force=False, busy_dialog=False, background=False, **kwargs):
     from jurialmunkey.parser import boolean
     if force == 'select':
+        from xbmcgui import Dialog
+        from tmdbhelper.lib.addon.plugin import get_localized
         choice = Dialog().yesno(
             get_localized(32391),
             get_localized(32392),
@@ -49,4 +49,7 @@ def run_autoupdate(force=False, busy_dialog=False, **kwargs):
             return
         force = boolean(choice)
     from tmdbhelper.lib.update.monitor import MonitorUserLists
-    MonitorUserLists().library_autoupdate(forced=boolean(force))  # busy_spinner=boolean(busy_dialog)
+    MonitorUserLists().library_autoupdate(
+        forced=boolean(force),
+        background=boolean(background),
+    )  # busy_spinner=boolean(busy_dialog)

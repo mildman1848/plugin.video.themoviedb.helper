@@ -129,14 +129,15 @@ class MonitorUserLists:
             return
         MonitorUserLists().library_autoupdate()
 
-    def library_autoupdate(self, forced=False):
+    def library_autoupdate(self, forced=False, background=False):
         # Log message
         from tmdbhelper.lib.addon.logger import kodi_log
         kodi_log(u'UPDATING LIBRARY', 1)
 
-        # Notify user
-        from xbmcgui import Dialog
-        Dialog().notification('TMDbHelper', f'{get_localized(32167)}...')
+        # Notify user only in interactive mode.
+        if not background:
+            from xbmcgui import Dialog
+            Dialog().notification('TMDbHelper', f'{get_localized(32167)}...')
 
         # Clean library if forcing to make sure dead entries removed
         from xbmc import executebuiltin
@@ -148,6 +149,7 @@ class MonitorUserLists:
         with LibraryBuilderUserList() as parent_library:
             parent_library.forced = forced
             parent_library.confirm = 0
+            parent_library.busy_spinner = not background
 
             for list_slug, user_slug in self.monitored_lists:
                 library = LibraryBuilderUserList()

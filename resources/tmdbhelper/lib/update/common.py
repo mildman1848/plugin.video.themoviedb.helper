@@ -44,10 +44,15 @@ class LibraryCommon():
 
     @cached_property
     def dialog(self):
+        if not self.busy_spinner:
+            return None
         from xbmcgui import DialogProgressBG
-        dialog = DialogProgressBG()
-        dialog.create(self.dialog_top, self.dialog_txt)
-        return dialog
+        try:
+            dialog = DialogProgressBG()
+            dialog.create(self.dialog_top, self.dialog_txt)
+            return dialog
+        except Exception:
+            return None
 
     def dialog_msg(self, count, total, **kwargs):
         if not self.dialog:
