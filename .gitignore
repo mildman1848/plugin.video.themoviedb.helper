@@ -61,3 +61,6 @@ target/
 .idea/
 
 *.zip
+
+# Keep placeholder files
+!.gitkeep
